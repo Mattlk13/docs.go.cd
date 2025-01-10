@@ -1,7 +1,9 @@
 *.iml
-.bundle
+.bundle/ruby
 .DS_Store
 .idea
+*.swp
+*.swo
 bin
 build
 node_modules
@@ -9,3 +11,8 @@ public
 resources
 _book
 static/javascripts/search/lunr/PagesIndex.json
+.ruby-version
+.ruby-gemset
+.node-version
+.nvmrc
+.hugo_build.lock

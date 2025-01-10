@@ -10,16 +10,16 @@
     "serve": "npx hugo serve -D",
     "index": "npx grunt lunr-index"
   },
-  "author": "ThoughtWorks, Inc.",
+  "author": "Thoughtworks, Inc.",
   "license": "Apache-2.0",
   "dependencies": {
-    "grunt": "^1.0.3",
-    "hugo-bin": "^0.41.0",
-    "lunr": "2.3.6",
-    "markdown-it": "^8.4.2",
-    "string": "^3.3.3",
-    "gray-matter": "^4.0.2",
-    "he": "^1.2.0"
+    "gray-matter": "^4.0.3",
+    "grunt": "^1.6.1",
+    "he": "^1.2.0",
+    "hugo-bin": "^0.119.0",
+    "lunr": "2.3.9",
+    "markdown-it": "^14.1.0",
+    "string": "^3.3.3"
   },
   "hugo-bin": {
     "buildTags": "extended"

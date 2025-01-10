@@ -19,19 +19,20 @@ The minimum requirements for a GoCD server can be found [here](../installation/s
 
 As the number of pipelines, agents and concurrent users increase in your setup, GoCD server may have to be scaled up by adding more memory and cores.
 
-If you have questions or have custom requirements, please contact support@thoughtworks.com to help with capacity planning for GoCD server
-
 ### Things to Remember
+
+#### Server
 
 Do not run any other CPU intensive applications on the same box as the GoCD Server.
 
 When the GoCD server is being scaled up to run with larger number of pipeline, agents and materials, ensure that the JVM has been allocated appropriate heap sizes. The default values for the GoCD server are ```-Xms512m``` (minimum) and ```-Xmx1024m``` (maximum). To utilize more heap space, set the JVM option `-Xmx` to a higher value (for e.g. to use 8 GB heap, set the flag `-Xmx8g`). This flag can be set in the file `wrapper-properties.conf` on the GoCD server to add the system properties described above. See the installation documentation for the location of `wrapper-properties.conf` file.
 
 ```shell
+# We recommend that you begin with the index `100` and increment the index for each system property.
 # use minimum JVM heap of 4gb
 wrapper.java.additional.100=-Xms4g
 # use maximum JVM heap of 8gb
-wrapper.java.additional.2=-Xmx8g
+wrapper.java.additional.101=-Xmx8g
 ```
 
 For linux/unix users running large setups, an exception might be seen in ```go-server.log``` mentioning "Too many open files". This may be an indication that there is a need to increase the number of file descriptors on the machine where GoCD Server is installed. On linux the command ```ulimit -n``` can be used to check the total number of file descriptors. To bump up the total number for file descriptors user and system, follow these steps:
@@ -39,6 +40,16 @@ For linux/unix users running large setups, an exception might be seen in ```go-s
 1. Edit ```/etc/security/limits.conf``` and add the lines: ```soft nofile 1024 * hard nofile 65535```
 2. Edit ```/etc/pam.d/login```, adding the line: ```session required /lib/security/pam_limits.so```
 3. The system file descriptor limit can be increased by setting ```fs.file-max``` in the file ```/etc/sysctl.conf```. To set the limit to ```65535``` use ```echo "fs.file-max = 65535" >> /etc/sysctl.conf```
+
+#### Agent
+
+When the GoCD agent is running pipelines with verbose output, many artifacts etc. you may encounter `java.lang.OutOfMemoryError: Java heap space` in the log files. It is a sign to increase memory limit. To do so tune `set.AGENT_STARTUP_ARGS` in the aforementioned `wrapper-properties.conf`.
+
+```shell
+###### System properties for GoCD agent ######
+# Set a memory limit of 1GB for the agent process. We recommend that you do not use more than half your system memory.
+set.AGENT_STARTUP_ARGS=-Xms128m -Xmx1024m
+```
 
 ### Tuning your JVM
 
@@ -97,13 +108,13 @@ Select the local process ```go.jar``` when the jconsole GUI opens up. This shows
 
 > Please note that in case of linux, jconsole will have to be started as 'go' user. In Windows, starting the process as administrator should suffice.
 
-More information about jconsole can be found [here](http://download.oracle.com/javase/1.5.0/docs/guide/management/jconsole.html).
+More information about jconsole can be found [here](https://docs.oracle.com/javase/7/docs/technotes/guides/management/jconsole.html).
 
 ### CPU and memory profiling
 
 Yourkit java profiler is a recommended tool for profiling the CPU and memory of the GO Server.
 
-To start using yourkit, download the latest version of the Yourkit java profiler from http://www.yourkit.com/download/index.jsp. Unpack to [yourkit\_profiler\_directory] The following steps will enable the GoCD server to pick up the yourkit profiler agent and enable us to take memory and cpu snapshots.
+To start using yourkit, download the latest version of the Yourkit java profiler from https://www.yourkit.com/download/index.jsp. Unpack to [yourkit\_profiler\_directory] The following steps will enable the GoCD server to pick up the yourkit profiler agent and enable us to take memory and cpu snapshots.
 
 For Linux
 
@@ -194,28 +205,4 @@ Use the following steps to take profile the application and take snapshots. The 
 
 In case of windows, delete the file ```C:\yjpagent.dll```. If you were using the variable ```YOURKIT_PATH```, then remove the environment variable.
 
-These snapshots will be saved in the yourkit configured snapshots folder. They can be sent to the GoCD Support so that they can be examined to help find the root cause of the performance.
-
-### Contact GoCD Support
-
-If the GoCD server continues to behave poorly, send us the following data.
-
-1. Database file ```cruise.h2.db```. Stop the server and take a backup of the database. Location:
-
-    Linux: ```/var/lib/db/h2db/cruise.h2.db```
-
-    Windows: ```[go_installation_dir]\db\h2db\cruise.h2.db```
-
-2. Log file ```go-server.log```. Location:
-
-    Linux: ```/var/log/go-server/go-server.log```
-
-    Windows: ```[go_installation_dir]\go-server.log```
-
-3. GoCD config file ```cruise-config.xml```. Location:
-
-    Linux: ```/etc/go/cruise-config.xml```
-
-    Windows: ```[go_installation_dir]\config\cruise-config.xml```
-
-4. If any Yourkit and jconsole snapshots as mentioned in the previous points, its useful if that can be sent too.
+These snapshots will be saved in the yourkit configured snapshots folder. Those can be examined to help find the root cause of the performance.

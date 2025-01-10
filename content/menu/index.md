@@ -32,7 +32,7 @@ headless: true
         <ul>
           <li class="level3"><a href="{{< relref "installation/install/server/linux.md" >}}">Linux</a></li>
           <li class="level3"><a href="{{< relref "installation/install/server/windows.md" >}}">Windows</a></li>
-          <li class="level3"><a href="{{< relref "installation/install/server/osx.md" >}}">Mac OS X</a></li>
+          <li class="level3"><a href="{{< relref "installation/install/server/osx.md" >}}">MacOS</a></li>
           <li class="level3"><a href="{{< relref "installation/install/server/zip.md" >}}">Generic Zip</a></li>
         </ul>
       </li>
@@ -40,18 +40,27 @@ headless: true
         <ul>
           <li class="level3"><a href="{{< relref "installation/install/agent/linux.md" >}}">Linux</a></li>
           <li class="level3"><a href="{{< relref "installation/install/agent/windows.md" >}}">Windows</a></li>
-          <li class="level3"><a href="{{< relref "installation/install/agent/osx.md" >}}">Mac OS X</a></li>
+          <li class="level3"><a href="{{< relref "installation/install/agent/osx.md" >}}">MacOS</a></li>
           <li class="level3"><a href="{{< relref "installation/install/agent/zip.md" >}}">Generic Zip</a></li>
         </ul>
       </li>
+      <li class="level2"><a href="{{< relref "installation/configuring_database.md" >}}">Configuring GoCD Database</a></li>
+        <ul>
+          <li class="level3"><a href="{{< relref "installation/configuring_database/h2.md" >}}">H2</a></li>
+          <li class="level3"><a href="{{< relref "installation/configuring_database/postgres.md" >}}">PostgreSQL</a></li>
+          <li class="level3"><a href="{{< relref "installation/configuring_database/mysql.md" >}}">MySQL</a></li>
+          <li class="level3"><a href="{{< relref "installation/configuring_database/connection-properties.md" >}}">Database Connection Properties</a></li>
+        </ul>
+      </li>
       <li class="level2"><a href="{{< relref "installation/upgrading_go.md" >}}">Upgrading GoCD</a></li>
+      <ul>
+        <li class="level3"><a href="{{< relref "installation/upgrading_go/upgrade_to_gocd_20.5.0.md" >}}">Upgrading to GoCD 20.5.0 and higher</a></li>
+      </ul>
       <li class="level2"><a href="{{< relref "installation/configuring_server_details.md" >}}">Configuring Server Details</a></li>
       <li class="level2"><a href="{{< relref "installation/configure-reverse-proxy.md" >}}">Configure a Reverse Proxy</a></li>
       <li class="level2"><a href="{{< relref "installation/configure-agent-proxy.md" >}}">Configure an agent with proxy</a></li>
       <li class="level2"><a href="{{< relref "installation/ssl_tls_config.md" >}}">Configuring SSL/TLS</a>
         <ul>
-          <li class="level3"><a href="{{< relref "installation/ssl_tls/setting_up_ciphers.md" >}}">Customizing Ciphers</a></li>
-          <li class="level3"><a href="{{< relref "installation/ssl_tls/custom_server_certificate.md" >}}">Change SSL Certificates</a></li>
           <li class="level3"><a href="{{< relref "installation/ssl_tls/end_to_end_transport_security.md" >}}">End to end transport security</a></li>
           <li class="level3"><a href="{{< relref "installation/ssl_tls/configuring_hsts_header.md" >}}">Configuring HSTS Header</a></li>
         </ul>
@@ -98,6 +107,7 @@ headless: true
           <li class="level3"><a href="{{< relref "configuration/dev_authorization.md" >}}">Authorizing Users</a></li>
           <li class="level3"><a href="{{< relref "configuration/delegating_group_administration.md" >}}">Delegating Group Administration</a></li>
           <li class="level3"><a href="{{< relref "configuration/pipeline_group_admin_config.md" >}}">Pipeline Group Administration</a></li>
+          <li class="level3"><a href="{{< relref "configuration/policy_in_gocd.md" >}}">Policy in GoCD</a></li>
         </ul>
       </li>
       <li class="level2"><a href="{{< relref "configuration/secrets_management.md" >}}">Secrets Management</a>
@@ -127,18 +137,17 @@ headless: true
       <li class="level2"><a href="{{< relref "advanced_usage/dev_conditional_task_execution.md" >}}">Conditional Task Execution</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/trigger_with_options.md" >}}">Trigger With Options</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/fan_in.md" >}}">Fan In</a></li>
-      <li class="level2"><a href="{{< relref "advanced_usage/properties.md" >}}">Properties</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/logging.md" >}}">Logging</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/ui_testing.md" >}}">UI Testing</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/compare_pipelines.md" >}}">Compare Builds</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/stage_duration_chart.md" >}}">Graphs</a></li>
-      <li class="level2"><a href="{{< relref "advanced_usage/command_repository.md" >}}">Command Repository</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/one_click_backup.md" >}}">Backup GoCD Server</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/cron_backup.md" >}}">Timer Based GoCD Server Backup</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/config_repo.md" >}}">Config Repository</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/other_config_options.md" >}}">Other Config Options</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/agent-health-check-api.md" >}}">Agent Health Check API</a></li>
       <li class="level2"><a href="{{< relref "advanced_usage/maintenance_mode.md" >}}">Maintenance Mode</a></li>
+      <li class="level2"><a href="{{< relref "advanced_usage/pipeline_activity.md" >}}">Pipeline activity</a></li>
       <li class="level2"><a href="{{< relref "integration/_index.md" >}}">Integrating GoCD With Other Tools</a></li>
     </ul>
   </li>
@@ -186,19 +195,10 @@ headless: true
       <li class="level2"><a href="{{< relref "faq/ordering_of_pipelines.md" >}}">Ordering of Pipelines</a></li>
       <li class="level2"><a href="{{< relref "faq/dependency_management.md" >}}">Run Tests against new Builds</a></li>
       <li class="level2"><a href="{{< relref "faq/admin_out_of_disk_space.md" >}}">Running out of Disk Space</a></li>
-      <li class="level2"><a href="{{< relref "faq/dev_save_properties.md" >}}">Save Properties for a Build</a></li>
       <li class="level2"><a href="{{< relref "faq/dev_see_artifact_as_tab.md" >}}">See artifacts as sub-tabs</a></li>
       <li class="level2"><a href="{{< relref "faq/tester_what_has_changed.md" >}}">See changes in new binary</a></li>
       <li class="level2"><a href="{{< relref "faq/dev_use_current_revision_in_build.md" >}}">Using Environment variables</a></li>
       <li class="level2"><a href="{{< relref "faq/dev_understand_why_build_broken.md" >}}">Why the Build is Broken?</a></li>
-    </ul>
-  </li>
-
-  <li class="level1 has-children">
-    {{< figure src="/images/arrow.png" class="menu-arrow" >}}
-    <a href="#"><b>Beta features</b></a>
-    <ul>
-      <li class="level2"><a href="{{< relref "beta/comment_on_pipeline_run.md" >}}">Comment on a pipeline run</a></li>
     </ul>
   </li>
 </ul>

@@ -11,10 +11,19 @@ aliases:
 
 Helm is a package manager for Kubernetes. Kubernetes packages are called charts. Charts are curated applications for Kubernetes.  
 
-Install the official GoCD Helm chart with this command:
+First verify your Helm version using command `helm version`, then install the official GoCD Helm chart as follows:
+
+1. Add the GoCD helm chart repository:
 
 ```bash
-helm install stable/gocd --name gocd --namespace gocd
+helm repo add gocd https://gocd.github.io/helm-chart
+helm repo update
+```
+
+2. Run the install command:
+
+```bash
+helm install gocd gocd/gocd --namespace gocd --create-namespace
 ```
 
 ## Access the GoCD server
