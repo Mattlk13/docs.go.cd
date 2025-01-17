@@ -19,13 +19,13 @@ If administrators are specified, only they can perform the following actions:
 - Enable agents
 - Add / remove agent resources
 
-Users can be made administrators from the "User Summary" tab in the "Admin" section.
+Users can be made administrators from the "Users Management" section found under the "Admin" menu.
 
-![](../images/user_summary_make_admin.png)
+![](../images/user_summary_system_admin.png)
 
-To give admin privileges to users and/or roles via "Config xml", please refer to the example in the section below, where members of the "go\_admin" role (jhumble and qiao), along with the user chris, can administer Go.
+To give admin privileges to users and/or roles via "Config xml", please refer to the example in the section below, where members of the "go\_admin" role (jhumble and qiao), along with the user chris, can administer GoCD.
 
-## Role-based security
+## Role-based Access Control
 
 You can define roles that can be used anywhere that authorization is required. A role is just a group of users. Administrators can add users to a new or existing role from the "User Summary" tab in the "Admin" section. Here, you can select any number of users and assign a new or existing role to them. In this example, user "aantony" is being added to the role "analyst"
 
@@ -67,17 +67,42 @@ For power users, here's how you would configure roles via "Config XML":
 
 In this example, the "qa" role has two users: dyang and pavan. The "go\_admin" role also has two users: jhumble and qiao.
 
+Starting GoCD `19.11.0`, the roles can be configured to allow how the users assigned the role can access a GoCD entity.
+GoCD system administrators can now define a role with a `policy` that will contain a set of permissions to govern access of a GoCD entity for the users belonging to the role.
+
+The following role definition would grant `view` action permissions for GoCD entity type `environment` with the matching wild card pattern:
+
+```xml
+...
+    <roles>
+        <role name="view-permissions">
+            <policy>
+                <allow type="environment" action="view">env*</allow>
+            </policy>
+        </role>
+    </roles>
+...
+```  
+This means that any user which has the role `view-permissions` will get `view` access to the environments which have the name starting with `env`.
+You can read more about policy [here](./policy_in_gocd.html).
+
 ## Specifying permissions for pipeline groups
 
 GoCD allows you to group pipelines together. If you define pipeline groups, you can specify who is able to view or operate those groups. To do this, you configure permissions to the pipeline group. System administrators will continue to have full access to the pipeline group even if they have not been explicitly granted permissions.
+
+---------------------
+
+**Note:** If no authorization is defined for a pipeline group, it is viewable and operable only by GoCD system administrators.
+
+---------------------
 
 The **"view" permission** allows users to view the pipeline. It does not give permission to trigger pipelines, approve stages, or re-run stages. In the below example, the users "akrishna" and "aantony" can view the pipelines in this group, but they cannot perform any operations on it.
 
 The **"operate" permission** allows users to trigger pipelines and its stages. In the below example, the role "developer" is being granted the operate permission and will be able to trigger pipelines and its stages within this group.
 
-The **"admin" permission** makes the user a [Pipeline Group Administrator](delegating_group_administration.html) allowing him to view, operate and administer the pipeline group. In the below example, role "admins" has been granted this permission.
+The **"admin" permission** makes the user a [Pipeline Group Administrator](delegating_group_administration.html) allowing them to view, operate and administer the pipeline group. In the below example, role "admins" has been granted this permission.
 
-> Note that is is possible to give a user or role only the operate permission. In the example below, the user "bot" only has operate permission. That means they can not view the pipeline, they can only operate it. This can be used to enable a script to operate on pipelines via the APIs without letting that user access any other features of Go.
+> Note that it is possible to give a user or role only the operate permission. In the example below, the user "bot" only has operate permission. That means they can not view the pipeline, they can only operate it. This can be used to enable a script to operate on pipelines via the APIs without letting that user access any other features of GoCD.
 
 To edit the permissions for a pipeline group, navigate to the "Pipelines" tab on the "Admin" section:
 
@@ -87,7 +112,7 @@ Then, click the "Edit" link for the pipeline group you want to manage permission
 
 ![](../images/group_permission.png)
 
-If no authorization is defined for a pipeline group, all GoCD users will have view and operate permissions to that group.
+![](../images/group_permission1.png)
 
 For power users, here's how you would configure permissions via "Config XML":
 
@@ -96,7 +121,7 @@ For power users, here's how you would configure permissions via "Config XML":
   <authorization>
     <view>
       <user>aantony</user>
-      <user>akrishna</user>
+      <user>krishna</user>
       <role>developer</role>
     </view>
     <operate>
@@ -115,19 +140,19 @@ For power users, here's how you would configure permissions via "Config XML":
 
 In GoCD, it is possible to specify [manual approvals](managing_pipelines.html) between stages. You can also specify which user is allowed to trigger manual approvals.
 
-The authorization can be inherited from the pipeline group this pipeline belongs to. But defining specific permissions overrides this. In the example below, only members of the role "admin", and the user "goleys", can trigger the approval.
+The authorization can be inherited from the pipeline group this pipeline belongs to. But defining specific permissions overrides this. In the example below, only members of the role "dev", and the user "operate", can trigger the approval.
 
 ![](../images/stage_permissions.png)
 
 For power users, here's how you would configure authorization for approvals for a stage via "Config XML":
 
 ```xml
-<stage name="defaultStage">
+<stage name="stage">
 
   <approval type="manual">
     <authorization>
-      <role>admin</role>
-      <user>goleys</user>
+      <role>dev</role>
+      <user>operate</user>
     </authorization>
   </approval>
 
@@ -164,8 +189,11 @@ For power users, here's how you would configure permissions via "Config XML":
 <templates>
     <pipeline name="app-1-template">
       <authorization>
+        <view>
+            <role>dev</role>
+        </view>
         <admins>
-          <user>operate</user>
+          <user>tez</user>
         </admins>
       </authorization>
       ...

@@ -4,9 +4,14 @@ title = "GoCD User Documentation"
 uglyUrls = true
 theme = "hugo-book"
 relativeURLs = true
-googleAnalytics = "UA-48357651-1"
 pygmentsCodefences = true
 pygmentsStyle = "emacs"
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
 [params]
   # (Optional, default true) Show or hide table of contents globally

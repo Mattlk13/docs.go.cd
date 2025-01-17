@@ -8,9 +8,14 @@ title: Reference
 
 # GoCD Configuration Reference
 
-<big><pre>
+<big>
+<pre>
 <a href="#cruise">&lt;cruise&gt;</a>
     <a href="#server">&lt;server&gt;</a>
+        <a href="#siteUrls">&lt;siteUrls&gt;</a>
+            <a href="#siteUrl">&lt;siteUrl/&gt;</a>
+            <a href="#secureSiteUrl">&lt;secureSiteUrl/&gt;</a>
+        <a href="#site_urls">&lt;/siteUrls&gt;</a>
         <a href="#security">&lt;security&gt;</a>
             <a href="#ldap">&lt;ldap&gt;</a>
                 <a href="#bases">&lt;bases&gt;</a>
@@ -28,10 +33,23 @@ title: Reference
             <a href="#authConfigs">&lt;/authConfigs&gt;</a>
             <a href="#roles">&lt;roles&gt;</a>
                 <a href="#role_definition">&lt;role&gt;</a>
+                    <a href="#policyinrole">&lt;policy&gt;</a>
+                      <a href="#allow_permission_in_policy">&lt;allow/&gt;</a>
+                      <a href="#deny_permission_in_policy">&lt;deny/&gt;</a>
+                    <a href="#policyinrole">&lt;/policy&gt;</a>
                     <a href="#usersinrole">&lt;users/&gt;</a>
                         <a href="#userinrole">&lt;user/&gt;</a>
                 <a href="#role_definition">&lt;/role&gt;</a>
                 <a href="#plugin_role_definition">&lt;pluginRole/&gt;</a>
+                    <a href="#policyinrole">&lt;policy&gt;</a>
+                      <a href="#allow_permission_in_policy">&lt;allow/&gt;</a>
+                      <a href="#deny_permission_in_policy">&lt;deny/&gt;</a>
+                    <a href="#policyinrole">&lt;/policy&gt;</a>
+                    <a href="#property">&lt;property&gt;</a>
+                      <a href="#key">&lt;key/&gt;</a>
+                      <a href="#value">&lt;value/&gt;</a>
+                    <a href="#property">&lt;/property&gt;</a>
+                <a href="#plugin_role_definition">&lt;/pluginRole&gt;</a>
             <a href="#roles">&lt;/roles&gt;</a>
             <a href="#admins">&lt;admins&gt;</a>
                 <a href="#roleinadmin">&lt;role/&gt;</a>
@@ -40,6 +58,13 @@ title: Reference
         <a href="#security">&lt;/security&gt;</a>
         <a href="#mailhost">&lt;mailhost/&gt;</a>
         <a href="#backup">&lt;backup/&gt;</a>
+        <a href="#artifacts">&lt;artifacts&gt;</a>
+            <a href="#artifactDir">&lt;artifactsDir/&gt;</a>
+            <a href="#purgeSettings">&lt;purgeSettings&gt;</a>
+                <a href="#purgeStartDiskSpace">&lt;purgeStartDiskSpace/&gt;</a>
+                <a href="#purgeUptoDiskSpace">&lt;purgeUptoDiskSpace/&gt;</a>
+            <a href="#purgeSettings">&lt;/purgeSettings/&gt;</a>
+         <a href="#artifacts">&lt;/artifacts&gt;</a>
     <a href="#server">&lt;/server&gt;</a>
     <a href="#elastic">&lt;elastic&gt;</a>
         <a href="#agentProfiles">&lt;agentProfiles&gt;</a>
@@ -89,6 +114,12 @@ title: Reference
                 <a href="#config-repo-property-value">&lt;value/&gt;</a>
             <a href="#config-repo-property">&lt;/property&gt;</a>
         <a href="#config-repo-configuration">&lt;/configuration&gt;</a>
+        <a href="#config-repo-rules">&lt;rules&gt;</a>
+            <a href="#config-repo-allow">&lt;allow&gt;</a>
+            <a href="#config-repo-allow">&lt;/allow&gt;</a>
+            <a href="#config-repo-deny">&lt;deny&gt;</a>
+            <a href="#config-repo-deny">&lt;/deny&gt;</a>
+        <a href="#config-repo-rules">&lt;/rules&gt;</a>
       <a href="#config-repo">&lt;/config-repo&gt;</a>
     <a href="#config-repos">&lt;/config-repos&gt;</a>
     <a href="#artifactStores">&lt;artifactStores&gt;</a>
@@ -137,8 +168,6 @@ title: Reference
                 <a href="#param">&lt;param/&gt;</a>
             <a href="#params">&lt;/params&gt;</a>
             <a href="#trackingtool">&lt;trackingtool/&gt;</a>
-            <a href="#
-                     ">&lt;mingle/&gt;</a>
             <a href="#timer">&lt;timer/&gt;</a>
             <a href="#environmentvariables">&lt;environmentvariables&gt;</a>
                 <a href="#variable">&lt;variable&gt;</a>
@@ -173,7 +202,7 @@ title: Reference
                     <a href="#filter">&lt;/filter&gt;</a>
                 <a href="#tfs">&lt;/tfs&gt;</a>
                 <a href="#package-material">&lt;package/&gt;</a>
-                <a href="#pipeline-dependency">&lt;pipeline/&gt;</a>
+                <a href="#pipeline-dependency-material">&lt;pipeline/&gt;</a>
             <a href="#materials">&lt;/materials&gt;</a>
             <a href="#stage">&lt;stage&gt;</a>
                 <a href="#approval">&lt;approval&gt;</a>
@@ -226,9 +255,6 @@ title: Reference
                         <a href="#tabs">&lt;tabs&gt;</a>
                             <a href="#tab">&lt;tab/&gt;</a>
                         <a href="#tabs">&lt;/tabs&gt;</a>
-                        <a href="#properties">&lt;properties&gt;</a>
-                            <a href="#property">&lt;property/&gt;</a>
-                        <a href="#properties">&lt;/properties&gt;</a>
                     <a href="#job">&lt;/job&gt;</a>
                 <a href="#jobs">&lt;/jobs&gt;</a>
             <a href="#stage">&lt;/stage&gt;</a>
@@ -248,21 +274,11 @@ title: Reference
                     &lt;value/&gt;
                 <a href="#variable">&lt;/variable&gt;</a>
             <a href="#environmentvariables">&lt;/environmentvariables&gt;</a>
-            <a href="#environment-agents">&lt;agents&gt;</a>
-                <a href="#environment-agents-physical">&lt;physical/&gt;</a>
-            <a href="#environment-agents">&lt;/agents&gt;</a>
             <a href="#environment-pipelines">&lt;pipelines&gt;</a>
                 <a href="#environment-pipeline">&lt;pipeline/&gt;</a>
             <a href="#environment-pipelines">&lt;/pipelines&gt;</a>
         <a href="#environment">&lt;/environment&gt;</a>
     <a href="#environments">&lt;/environments&gt;</a>
-    <a href="#agents">&lt;agents&gt;</a>
-        <a href="#agent">&lt;agent&gt;</a>
-            <a href="#agentresources">&lt;resources&gt;</a>
-                <a href="#agentresource">&lt;resource/&gt;</a>
-            <a href="#resources">&lt;/resources&gt;</a>
-        <a href="#agent">&lt;/agent&gt;</a>
-    <a href="#agents">&lt;/agents&gt;</a>
 <a href="#cruise">&lt;/cruise&gt;</a>
 </pre></big>
 
@@ -284,50 +300,85 @@ The `<server>` element can be used to define information and attributes of the G
 
 | Attribute | Required | Description |
 |-----------|----------|-------------|
-| artifactsdir | No | This directory is where Go will store its information, including artifacts published by jobs. The **default value** is 'artifacts' in the folder where the Go Server is installed. You can use an absolute path or a relative path which will take the server installed directory as the root. **Notes:** If you specify the attribute, please check whether Go has permission to access that directory. Also you should be aware of that changing this value while Go Server is running won't take effect until Go Server is restarted. |
-| siteUrl | No | This entry will be used by Go Server to generate links for emails, feeds etc., where we cannot have relative URLs. For example, if you have fronted Go with a reverse proxy, this value should be the base URL for the proxy and not the internal Go address. For this reason, it is necessary to specify this configuration. Format: [protocol]://[host]:[port]. You need to define the [port] in case Go uses a non-standard port. |
-| secureSiteUrl | No | Certain features in Go, such as Mingle integration, require an HTTPS(SSL) endpoint. If you wish that your primary site URL be HTTP, but still want to have HTTPS endpoints for the features that require SSL, you can specify the secureSiteUrl attribute with a value of the base HTTPS URL. Format: https://[host]:[port]. You need to define the [port] in case Go uses a non-standard port. |
-| purgeStart | No | Go can purge old artifacts when available disk space on the server is low. Go will begin to purge artifacts when disk space is lower than 'purgeStart' GB. Artifacts will never be deleted if 'purgeStart' and 'purgeUpto' are not defined. |
-| purgeUpto | No | Go can purge old artifacts when available disk space on the server is low. Go will purge artifacts till available disk space is greater than 'purgeUpto' GB. This attribute must be defined if purgeStart is defined. |
-| jobTimeout | No | This entry will be used as the default timeout value for hung jobs. A job is considered as hung if it does not generate any console output for "jobTimeout" minutes. If the attribute is not specified jobTimeout defaults to 60 minutes. |
-| commandRepositoryLocation | Yes (auto-generated) | Specifies the location of the [command repository]() relative to `go-server_install_root/db/command_repository`. The bundled repository is in a directory named default. |
+| jobTimeout | No | This entry will be used as the default timeout value for hung jobs. A job is considered as hung if it does not generate any console output for "jobTimeout" minutes. If the attribute is not specified job will never timeout. |
 | serverId | Yes (auto-generated) | This value uniquely identifies a Go server installation. It may be used by features that require unique names/identifiers across different Go server installations. This attribute need not be specified for a new server. In case no value is given, server auto-generates a random UUID an assigns it as serverId. This value should never be changed for an existing server. Administrator should clear this attribute before copying configuration to a different installation. |
 | agentAutoRegisterKey | No | The key specified here is used by agents for [auto-registration](../advanced_usage/agent_auto_register.html). |
 
-**Notes:**
-
-- If both siteUrl and secureSiteUrl are not defined, Go URLs will use the default domain which in most cases will be `http://your-go-server:8153`
-- If only siteUrl is defined and is not HTTPS, Go URLs will be composed from the siteUrl entry. In this case, the secure pages of Go will not be navigable.
-- If only siteUrl is defined and is HTTPS, Go URLs will be composed from the siteUrl entry and all pages will be HTTPS.
-- If only secureSiteUrl is defined, Go URLs will use the default domain for non-HTTPS pages, while HTTPs pages will be composed from the secureSiteUrl entry.
-- If purgeStart and purgeUpto are not defined, artifacts will never be deleted.
 
 **Examples**
 
 ```xml
 <cruise>
-  <server artifactsdir="/var/lib/go/big-artifacts-folder" siteUrl="http://go.example.com" secureSiteUrl="https://go.example.com" purgeStart='5' purgeUpto='10' jobTimeout='30'>
+  <server jobTimeout='30'>
   </server>
 </cruise>
 ```
 
 [top](#top)
 
+## &lt;siteUrls&gt; {#siteUrls}
+
+The `<siteUrls>` element is used to define [`<siteUrl>`](#siteUrl) and [`<secureSiteUrl>`](#secureSiteUrl).
+
+**Notes**
+
+- If both `<siteUrl>` and `<secureSiteUrl>` are not defined, GoCD URLs will use the default domain which in most cases will be `http://your-go-server:8153`
+- If only `<siteUrl>` is defined and is not HTTPS, GoCD URLs will be composed from the `<siteUrl>` entry. In this case, the secure pages of GoCD will not be navigable.
+- If only `<siteUrl>` is defined and is HTTPS, GoCD URLs will be composed from the `<siteUrl>` entry and all pages will be HTTPS.
+- If only `<secureSiteUrl>` is defined, GoCD URLs will use the default domain for non-HTTPS pages, while HTTPS pages will be composed from the `<secureSiteUrl>` entry.
+
+
+**Examples**
+
+```xml
+<siteUrls>
+  <siteUrl>http://siteUrl.com</siteUrl>
+  <secureSiteUrl>https://secureSiteUrl.com</secureSiteUrl>
+</siteUrls>
+```
+
+[top](#top)
+
+## &lt;siteUrl&gt; {#siteUrl}
+
+The `<siteUrl>` element is used by GoCD Server to generate links for emails, feeds etc., where we cannot have relative URLs. For example, if you have fronted GoCD with a reverse proxy, this value should be the base URL for the proxy and not the internal GoCD address. For this reason, it is necessary to specify this configuration. `Format: [protocol]://[host]:[port]`. You need to define the [port] in case GoCD uses a non-standard port. The [Protocol] can be HTTP or HTTPS.
+
+**Examples**
+
+```xml
+<siteUrls>
+  <siteUrl>http://siteUrl.com</siteUrl>
+  ...
+</siteUrls>
+```
+
+[top](#top)
+
+## &lt;secureSiteUrl&gt; {#secureSiteUrl}
+
+The `<secureSiteUrl>` element is used to specify value of the base HTTPS URL.Certain features in GoCD require an HTTPS(SSL) endpoint. If you wish that your primary site URL be HTTP, but still want to have HTTPS endpoints for the features that require SSL,you can use this element. Format: `https://[host]:[port]`. You need to define the [port] in case GoCD uses a non-standard port.
+
+**Examples**
+
+```xml
+<siteUrls>
+  ...
+  <secureSiteUrl>https://secureSiteUrl.com</secureSiteUrl>
+</siteUrls>
+```
+
+[top](#top)
+
+
 ## &lt;security&gt; {#security}
 
 The `<security>` element can be used to enable authentication. If the element is not defined anyone can use Go without logging in. We currently support enabling authentication using Authorization plugin endpoint. Support for LDAP and simple password-file authentication is available out of box via the bundled plugins for the same. You can use more than one authentication mechanism if you want. Support for inbuilt [LDAP](#ldap) and [password file](#passwordFile) tags in configuration has been deprecated.
-
-**Attributes**
-
-| Attribute | Required | Description |
-|-----------|----------|-------------|
-| allowOnlyKnownUsersToLogin | No | Allow only those users to login who have been explicitly added by an admin. If false, any new user who tries to login and is present in your password file or LDAP will be automatically created as a Go user. (Default=false) |
 
 **Examples**
 
 ```xml
 <server artifactsdir="/var/lib/go/big-artifacts-folder">
-  <security allowOnlyKnownUsersToLogin="false">
+  <security>
     <authConfigs>
      <authConfig id="profile-id" pluginId="cd.go.authentication.ldap">
        <property>
@@ -488,10 +539,111 @@ Pay attention to the effects of '?' and '\*' in the day-of-week and day-of-month
 
 [top](#top)
 
-## &lt;ldap&gt; {#ldap} [*Deprecated*]
+## &lt;artifacts&gt; {#artifacts}
+
+The `<artifacts>` element can be used to define information related to artifacts.In this, artifact directory can be defined using  [`<artifactsDir>`](#artifactDir) and purge settings can be using [`<purgeSettings>`](#purgeSettings)
 
 
-The `<ldap>` element is used to specify the ldap server. Users can access Go with their username and password from this ldap server.
+**Examples**
+
+```xml
+<artifacts>
+  <artifactsDir>artifacts</artifactsDir>
+  <purgeSettings>
+    <purgeStartDiskSpace>30.0</purgeStartDiskSpace>
+    <purgeUptoDiskSpace>60.0</purgeUptoDiskSpace>
+  </purgeSettings>
+</artifacts>
+```
+
+[top](#top)
+
+## &lt;artifactDir&gt; {#artifactDir}
+
+The `<artifactsDir>` element is used to define the directory where GoCD will store its information, including artifacts published by jobs.The **default value** is 'artifacts' in the folder where the GoCD Server is installed. You can use an absolute path or a relative path which will take the server installed directory as the root.
+
+**Notes:**
+
+If you specify the attribute, please check whether GoCD has permission to access that directory. Also you should be aware of that changing this value while Go Server is running won't take effect until GoCD Server is restarted.
+
+**Examples**
+
+```xml
+<artifacts>
+  <artifactsDir>artifacts</artifactsDir>
+  ...
+</artifacts>
+```
+
+[top](#top)
+
+## &lt;purgeSettings&gt; {#purgeSettings}
+
+The `<purgeSettings>` element is used to configure GoCD to automatically delete old artifacts when the available disk space on the server is low.
+
+The `<purgeSettings>` can be configured with `<purgeStartDiskSpace>` and `<purgeUptoDiskSpace>`. If available disk space on the server is lower than `<purgeStartDiskSpace>` GB, GoCD will purge old artifacts till the available disk space is greater than `<purgeUptoDiskSpace>`GB.
+
+**Notes**
+
+- Artifacts will never be deleted if `purgeStartDiskSpace` and `purgeUptoDiskSpace` are not defined.
+
+- If `purgeStartDiskSpace` is defined,`purgeUptoDiskSpace`should be defined.
+
+**Examples**
+
+```xml
+<purgeSettings>
+    <purgeStartDiskSpace>30.0</purgeStartDiskSpace>
+    <purgeUptoDiskSpace>60.0</purgeUptoDiskSpace>
+</purgeSettings>
+```
+
+[top](#top)
+
+## &lt;purgeStartDiskSpace&gt; {#purgeStartDiskSpace}
+
+The `<purgeStartDiskSpace>` element is used to define the limit of available disk space. If actual available disk space is less than the limit, GoCD will start purging the artifacts.
+
+
+**Notes**
+
+- It should be smaller than `<purgeUptoDiskSpace>`.
+
+**Examples**
+
+```xml
+<purgeSettings>
+    <purgeStartDiskSpace>30.0</purgeStartDiskSpace>
+    ...
+</purgeSettings>
+```
+
+[top](#top)
+
+## &lt;purgeUptoDiskSpace&gt; {#purgeUptoDiskSpace}
+
+The `<purgeUptoDiskSpace>` element is used to define the limit of available disk space. GoCD will stop purging artifacts, when the available disk space reaches the specified limit.
+
+**Notes**
+
+- It should be greater than `<purgeStartDiskSpace>`.
+
+**Examples**
+
+```xml
+<purgeSettings>
+    ...
+    <purgeUptoDiskSpace>30.0</purgeUptoDiskSpace>
+</purgeSettings>
+```
+
+[top](#top)
+
+## &lt;ldap&gt; [*Deprecated*] {#ldap}
+
+
+The `<ldap>` element is used to specify the ldap server. Users can access
+with their username and password from this ldap server.
 
 **Attributes**
 
@@ -559,7 +711,7 @@ the directory from which the LDAP search begins.
 [top](#top)
 
 
-## &lt;passwordFile&gt; {#passwordFile} [*Deprecated*]
+## &lt;passwordFile&gt; [*Deprecated*] {#passwordFile}
 
 The `<passwordFile>` element is used to specify a file which has a set of username and password pairs. The format of username and password in this file is \${username}=\${password which has been encrypted with SHA1}, with one line per user.
 
@@ -622,6 +774,7 @@ An `authConfig` should have a unique `id` attribute and should be associated to 
 |-----------|----------|-------------|
 | id       | Yes | Unique Id of authConfig.           |
 | pluginId | Yes | The Id of authorization plugin. |
+| allowOnlyKnownUsersToLogin | No | Allow only those users to login who have been explicitly added by an admin. If false, any new user who tries to login and is present in your password file or LDAP will be automatically created as a Go user. (Default=false) |
 
 Refer to your plugin's documentation to know the `property` keys to be configured.
 
@@ -629,7 +782,7 @@ Refer to your plugin's documentation to know the `property` keys to be configure
 
 
 ```xml
-<authConfig id="file-auth-config" pluginId="cd.go.authentication.passwordfile">
+<authConfig id="file-auth-config" pluginId="cd.go.authentication.passwordfile" allowOnlyKnownUsersToLogin="false">
   <property>
     <key>PasswordFilePath</key>
     <value>/etc/go/password.properties</value>
@@ -661,7 +814,8 @@ The `<roles>` element is a container for roles that users defined. It can't be d
 
 ## &lt;role&gt; {#role_definition}
 
-The `<role>` element is used to define a group of users who perform similar tasks. Users are added by adding the sub-tag [`<users>`](#usersinrole).
+The `<role>` element is used to define a group of users who perform similar tasks. Optionally, the `<role>` element can specify a policy which defines the permission model for the users defined as part of the current role.
+In a `<role>` element, Users are added by adding the sub-tag [`<users>`](#usersinrole) and Policy is added by adding the sub-tag [`<policy>`](#policyinrole).
 
 **Notes:**
 
@@ -674,11 +828,15 @@ The `<role>` element is used to define a group of users who perform similar task
 
 **Examples**
 
-Two users would be in the role 'pipeline-operators', they are **Jez** and **lqiao**.
+Two users would be in the role 'environment-operators', they are **Jez** and **lqiao** have access to administer all the environments expect environments matching `prod_*` name.
 
 ```xml
 <roles>
-  <role name="pipeline-operators">
+  <role name="environment-operators">
+    <policy>
+        <deny action="administer" type="environment">prod_*</deny>
+        <allow action="administer" type="environment">*</allow>
+    </policy>
     <users>
       <user>Jez</user>
       <user>lqiao</user>
@@ -719,11 +877,90 @@ Two users would be in the role 'pipeline-operators', they are **Jez** and **lqia
 </role>
 ```
 
+
+## &lt;policy&gt; {#policyinrole}
+
+The `<policy>` element defines the permissions for the users belonging to the users of a role.
+
+In a `<policy>` element, the *allow* permission can added by adding the sub-tag [`<allow>`](#allow_permission_in_policy) and *deny* permission can be added by adding the sub-tag [`<deny>`](#deny_permission_in_policy).
+
+**Examples**
+
+The following policy would grant users the permissions to `administer` to all environments expect environments matching `prod_*` name.
+
+```xml
+<policy>
+    <deny action="administer" type="environment">prod_*</deny>
+    <allow action="administer" type="environment">*</allow>
+</policy>
+```
+
+## &lt;allow&gt; {#allow_permission_in_policy}
+
+The `<allow>` element under `policy` grants permissions to the defined GoCD entity based on the type, action and resource.
+
+The value of the `allow` element defines the resource on which policy should be applied.
+
+ **Notes:**
+
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| type      | Yes      | The type of the GoCD entity to grant permissions on. The supported values for type are `environment` and `config_repo`. |
+| action    | Yes      | The operation that can be performed on the GoCD entity. The supported values for action are `administer` and `view`. |
+
+ **Examples**
+
+ The following policy would grant users the permissions to `administer` to all environments matching `prod_*` name.
+
+ ```xml
+     <allow action="administer" type="environment">prod_*</allow>
+ ```
+
+An administrator can use `*` to provide allow access of all type and action.
+
+**Examples**
+
+```xml
+     <allow action="*" type="*">*</allow>
+ ```
+
+
+## &lt;deny&gt; {#deny_permission_in_policy}
+
+The `<deny>` element under `policy` deny the access to the defined GoCD entity based on the type, action and resource.
+
+The value of the `deny` element defines the resource on which policy should be applied.
+
+ **Notes:**
+
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| type      | Yes      | The type of the GoCD entity to deny the access on. The supported values for type are `environment` and `config_repo`. |
+| action    | Yes      | The operation that can not be performed on the GoCD entity. The supported values for action are `administer` and `view`. |
+
+ **Examples**
+
+ The following policy would deny the `administer` access to all environments matching `prod_*` name.
+
+ ```xml
+     <deny action="administer" type="environment">prod_*</deny>
+ ```
+
+An administrator can use `*` to deny all the access of all type and action.
+
+**Examples**
+
+```xml
+     <deny action="*" type="*">*</deny>
+ ```
+
 [top](#top)
 
 ## &lt;pluginRole&gt; {#plugin_role_definition}
 
 The `<pluginRole>` element is used to define roles in GoCD. Unlike `role` which contains a list of `users`, `pluginRole` provides [configuration](#property) to map a GoCD role to a role defined in an external authorization server managed by an Authorization plugin. e.g pluginRole can be used to define mappings between LDAP group and GoCD roles.
+
+Optionally, the `<pluginRole>` element can specify a [policy](#policyinrole) which defines the permission model for the users of the current role.
 
 **Notes:**
 
@@ -739,6 +976,10 @@ Refer to your plugin's documentation to know the `property` keys to be configure
 ```xml
 <roles>
 <pluginRole name="SuperAdmin" authConfigId="auth_config_id">
+  <policy>
+    <deny action="administer" type="environment">prod_*</deny>
+    <allow action="administer" type="environment">*</allow>
+  </policy>
   <property>
     <key>MemberOfAttribute</key>
     <value>memberOf</value>
@@ -938,7 +1179,7 @@ A cluster profile should have a unique `id` attribute and should be associated t
 <clusterProfile id="cluster-us-east" pluginId="com.example.ec2">
   <property>
     <key>GoServerUrl</key>
-    <value>https://your-server-host:8154/go</value>
+    <value>https://your-server-host/go</value>
   </property>
   <property>
     <key>ClusterName</key>
@@ -1111,7 +1352,7 @@ The config repo `<p4>` material element specifies the location of your code base
 | password | No | Password for the specified user. |
 | encryptedPassword | No | Encrypted Password for the specified user. |
 | useTickets | No | Set to true to work with perforce tickets. Go will do a p4 login using the supplied password before each command. We recommend that you make your user a part of a p4 group, and set the ticket timeout to unlimited as described [here](https://www.perforce.com/manuals/cmdref/Content/CmdRef/p4_login.html). |
-| view | Yes | Valid Perforce view. The view should be a sub-element of P4. Click [here](http://www.perforce.com/perforce/doc.082/manuals/p4guide/02_config.html#1066090) to see details about VIEW of Perforce. |
+| view | Yes | Valid Perforce view. The view should be a sub-element of P4. Click [here](https://www.perforce.com/perforce/doc.082/manuals/p4guide/02_config.html#1066090) to see details about VIEW of Perforce. |
 | materialName | No | The name to identify a material. Material name can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen. Spaces are not allowed. Material name is case insensitive. The max length is 255 characters. |
 | autoUpdate | No | By default Go polls the repository for changes automatically. If autoUpdate is set to false then Go will not poll the repository for changes. For config repo materials, autoUpdate is always set to true. |
 
@@ -1227,6 +1468,59 @@ The config repo `<scm>` material element specifies the location of your code bas
 
 [top](#top)
 
+## &lt;rules&gt; {#config-repo-rules}
+
+The config repo `<rules>` rules element is a container for `allow` and `deny` rule. More about `rules` can be read from [here](../advanced_usage/pipelines_as_code.html#specifying-rules).
+
+**Examples are:**
+
+```xml
+<rules>
+    <allow action="refer" type="environment">dev</allow>
+    <deny action="refer" type="environment">prod</allow>
+</rules>
+```
+
+[top](#top)
+
+
+## &lt;allow&gt; {#config-repo-allow}
+
+The `<allow>` element is the rule which allows referring the specified configured type and resource.
+
+**Attributes**
+
+| Attribute   | Required   | Description  |
+|------------ | ---------- | -------------|
+| action      | Yes        | Action for the entity specified under attribute `type`. Supported values are `refer`. |
+| type        | Yes        | The GoCD entity type for which rule will be applied. Supported values are `*, environment, pipeline_group, pipeline`. |
+
+**Example:**
+
+```xml
+<allow action="refer" type="*">*</allow>
+```
+
+[top](#top)
+
+## &lt;deny&gt; {#config-repo-deny}
+
+The `<deny>` element is the rule which denies the referral of the defined type and resource.
+
+**Attributes**
+
+| Attribute   | Required   | Description  |
+|------------ | ---------- | -------------|
+| action      | Yes        | Action for the entity specified under attribute `type`. Supported values are `refer`.  |
+| type        | Yes        | The GoCD entity type for which rule will be applied. Supported values are `*, environment, pipeline_group, pipeline`. |
+
+**Example:**
+
+```xml
+<deny action="refer" type="*">*</deny>
+```
+
+[top](#top)
 
 ## &lt;repositories&gt; {#repositories}
 
@@ -1735,7 +2029,7 @@ template.
 ## &lt;trackingtool&gt; {#trackingtool}
 
 The `<trackingtool>` element can be used to specify links to an issue tracker. Go will construct a link based on the commit message that you
-can use to take you to your tracking tool (Mingle card, JIRA issue, Trac issue etc).
+can use to take you to your tracking tool (JIRA issue, Trac issue etc).
 
 **Attributes**
 
@@ -1759,42 +2053,16 @@ is your task ID. Your configuration would be:
 If you check in some code with a commit message which includes the characters 'evo-512' then that will appear in the modification pop-up
 box as a link. When you click it, Go will take you to the web page `http://your-trackingtool/yourproject/512`.
 
-For example: If you use Mingle for your task manager, the configuration would be:
+For example: If you use Jira for your task manager, the configuration would be:
 
 ```xml
 <pipeline name="yourproject">
-  <trackingtool link="http://your-mingle-server/projects/yourproject/cards/${ID}" regex="##(\d+)"/>
+  <trackingtool link="https://your-jira-server/browse/yourproject-${ID}" regex="##(\d+)"/>
   ...
 </pipeline>
 ```
 
 **Notes:** You can not define multiple tracking tools in one pipeline.
-
-[top](#top)
-
-## &lt;mingle&gt; {#mingle}
-
-This element let's you associate a [Mingle](http://www.thoughtworks.com/mingle) project to a pipeline. Once associated, you will be able to track Mingle cards from within Go.
-
-**Note:** You cannot configure a [trackingtool](#trackingtool) if mingle is configured for a pipeline.
-
-**Attributes**
-
-| Attribute | Required | Description |
-|-----------|----------|-------------|
-| baseUrl | Yes | Base URL to the Mingle installation (do not include the project name/identifier) |
-| projectIdentifier | Yes | This is the "Identifier" specified under a Mingle project's "Basic Options" |
-| mqlGroupingConditions | No | An MQL string that determines the "passing criteria" for cards displayed in Go |
-
-**Examples**
-
-```xml
-<mingle
-    baseUrl="http://mingle.example.com"
-    projectIdentifier="my_project">
-    <mqlGroupingConditions>status > 'In Dev'</mqlGroupingConditions>
-</mingle>
-```
 
 [top](#top)
 
@@ -2013,7 +2281,7 @@ The `<svn>` element specifies the location of your code base in Subversion repos
 | dest | Required if there are multiple materials | The directory where the code will be checked out. This is relative to the sandbox of the Go Agent. Go prevents the destination folder from being outside the agent's sandbox. |
 | materialName | Required if this material is referenced in pipeline labeltemplate | The name to identify a material. Material name can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen, but whitespace is not allowed. A material name is case insensitive and starting with fullstop is invalid. It needs to be unique within a pipeline. The max length is 255 characters. |
 | autoUpdate | No | By default Go polls the repository for changes automatically. If autoUpdate is set to false then Go will not poll the repository for changes. Instead it will check for changes only when you trigger a pipeline that contains this material or it receives a notification through a post-commit hook. If the same material is specified more than once in the configuration file, all of them must have the same value for autoUpdate. |
-| invertFilter | No | Inverts any `filter` elements, turning them into whitelists. Only files that *match* the filter will trigger a new build. |
+| invertFilter | No | Inverts any `filter` elements, turning them into allowlists. Only files that *match* the filter will trigger a new build. |
 
 **Notes:**
 
@@ -2055,7 +2323,7 @@ You must install Mercurial 1.5 or above on the Go Server and Go Agents for the j
 | dest | Only for multiple materials | The directory where the code will be checked out. This is relative to the sandbox of the Go Agent. Go prevents the destination folder from being outside the agent's sandbox. |
 | materialName | Required if this material is referenced in pipeline labeltemplate | The name to identify a material. Material name can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen. Spaces are not allowed. Material name is case insensitive. It needs to be unique within a pipeline. The max length is 255 characters. |
 | autoUpdate | No | By default Go polls the repository for changes automatically. If autoUpdate is set to false then Go will not poll the repository for changes. Instead it will check for changes only when you trigger a pipeline that contains this material. If the same material is specified more than once in the configuration file, all of them must have the same value for autoUpdate. |
-| invertFilter | No | Inverts any `filter` elements, turning them into whitelists. Only files that *match* the filter will trigger a new build. |
+| invertFilter | No | Inverts any `filter` elements, turning them into allowlists. Only files that *match* the filter will trigger a new build. |
 
 **Examples**
 
@@ -2093,17 +2361,17 @@ Go will use directory under pipelines/{pipelineName} in agent side as Perforce r
 
 **Attributes**
 
-| Attribute | Required | Description |
-|-----------|----------|-------------|
-| port | Yes | Perforce server connection to use (host:port). This is the same as you would pass in the p4port parameter for the p4 command line or in the P4PORT environment variable. |
-| username | No | Perforce username to use. |
-| password | No | Password for the specified user. |
-| useTickets | No | Set to true to work with perforce tickets. Go will do a p4 login using the supplied password before each command. We recommend that you make your user a part of a p4 group, and set the ticket timeout to unlimited as described [here](https://www.perforce.com/manuals/cmdref/Content/CmdRef/p4_login.html). |
-| dest | Only for multiple materials | The directory where the code will be checked out. This is relative to the sandbox of the Go Agent. Go prevents the destination folder from being outside the agent's sandbox. |
-| view | Yes | Valid Perforce view. The view should be a sub-element of P4. Click [here](http://www.perforce.com/perforce/doc.082/manuals/p4guide/02_config.html#1066090) to see details about VIEW of Perforce. |
-| materialName | Required if this material is referenced in pipeline labeltemplate | The name to identify a material. Material name can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen. Spaces are not allowed. Material name is case insensitive. It needs to be unique within a pipeline. The max length is 255 characters. |
+| Attribute | Required | Description                                                                                                                                                                                                                                                                                                                                                                    |
+|-----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| port | Yes | Perforce server connection to use (host:port). This is the same as you would pass in the p4port parameter for the p4 command line or in the P4PORT environment variable.                                                                                                                                                                                                       |
+| username | No | Perforce username to use.                                                                                                                                                                                                                                                                                                                                                      |
+| password | No | Password for the specified user.                                                                                                                                                                                                                                                                                                                                               |
+| useTickets | No | Set to true to work with perforce tickets. Go will do a p4 login using the supplied password before each command. We recommend that you make your user a part of a p4 group, and set the ticket timeout to unlimited as described [here](https://www.perforce.com/manuals/cmdref/Content/CmdRef/p4_login.html).                                                                |
+| dest | Only for multiple materials | The directory where the code will be checked out. This is relative to the sandbox of the Go Agent. Go prevents the destination folder from being outside the agent's sandbox.                                                                                                                                                                                                  |
+| view | Yes | Valid Perforce view. The view should be a sub-element of P4. Click [here](https://www.perforce.com/perforce/doc.082/manuals/p4guide/02_config.html#1066090) to see details about VIEW of Perforce.                                                                                                                                                                             |
+| materialName | Required if this material is referenced in pipeline labeltemplate | The name to identify a material. Material name can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen. Spaces are not allowed. Material name is case insensitive. It needs to be unique within a pipeline. The max length is 255 characters.                                                                                                     |
 | autoUpdate | No | By default Go polls the repository for changes automatically. If autoUpdate is set to false then Go will not poll the repository for changes. Instead it will check for changes only when you trigger a pipeline that contains this material. If the same material is specified more than once in the configuration file, all of them must have the same value for autoUpdate. |
-| invertFilter | No | Inverts any `filter` elements, turning them into whitelists. Only files that *match* the filter will trigger a new build. |
+| invertFilter | No | Inverts any `filter` elements, turning them into allowlists. Only files that *match* the filter will trigger a new build.                                                                                                                                                                                                                                                      |
 
 **Notes:**
 
@@ -2170,7 +2438,7 @@ directory where the .ssh/ directory is located.
 | dest | Only for multiple materials | The directory under the sandbox of Go Agent. Go will check out the source code into this directory. |
 | materialName | Required if this material is referenced in pipeline labeltemplate | The name to identify a material. Material name can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen. Spaces are not allowed. Material name is case insensitive. It needs to be unique within a pipeline. The max length is 255 characters. |
 | autoUpdate | No | By default Go polls the repository for changes automatically. If autoUpdate is set to false then Go will not poll the repository for changes. Instead it will check for changes only when you trigger a pipeline that contains this material. If the same material is specified more than once in the configuration file, all of them must have the same value for autoUpdate. |
-| invertFilter | No | Inverts any `filter` elements, turning them into whitelists. Only files that *match* the filter will trigger a new build. |
+| invertFilter | No | Inverts any `filter` elements, turning them into allowlists. Only files that *match* the filter will trigger a new build. |
 
 **Examples are:**
 
@@ -2208,7 +2476,7 @@ The `<tfs>` element specifies the location of your code base in a TFS Source rep
 | Password | Yes | Password of the account to access the TFS collection. |
 | Project Path| Yes | The project path within the TFS collection. |
 | dest | Only for multiple materials | The directory where the code will be checked out. This is relative to the sandbox of the Go Agent. Go prevents the destination folder from being outside the agent's sandbox. |
-| invertFilter | No | Inverts any `filter` elements, turning them into whitelists. Only files that *match* the filter will trigger a new build. |
+| invertFilter | No | Inverts any `filter` elements, turning them into allowlists. Only files that *match* the filter will trigger a new build. |
 
 **Examples are:**
 
@@ -2285,7 +2553,7 @@ The `<package>` element refers to package which is defined as part of repositori
 
 [top](#top)
 
-## &lt;pipeline&gt; {#pipeline}
+## &lt;pipeline&gt; {#pipeline-dependency-material}
 
 The `<pipeline>` element specifies that successful completion of a stage in another pipeline will trigger the current pipeline to start.
 
@@ -2300,16 +2568,22 @@ Note that you can not specify two (or more) dependencies for the same upstream p
 | pipelineName | Yes | The name of a pipeline that this pipeline depends on. |
 | stageName | Yes | The name of a stage which will trigger this pipeline once it is successful. |
 | materialName | By default the materialName is the name of the upstream pipeline (the pipelineName). This is required if this material is referenced in pipeline labeltemplate | The name to identify a material. Material name can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen. Spaces are not allowed. Material name is case insensitive. It needs to be unique within a pipeline. The max length is 255 characters. |
+| ignoreForScheduling | No (false by default) | Controls whether the pipeline will run if the specified upstream pipeline/stage passes. <ul><li>When set to `false`, the pipeline will run.</li><li>When set to `true`, the pipeline will not run.</li></ul><p>However, if the pipeline is triggered through other means (e.g., by another material, manually, or via timer), it will always pick up the latest successful run of the upstream pipeline stage specified by this material. |
 
 **Notes:**
 
-The downstream pipeline wouldn't be triggered if there was no passed stage in the upstream pipeline.
+The downstream pipeline will only run if the upstream pipeline stage has passed.
 
 **Examples**
 
-Suppose there are four pipelines, and they are commonLib1, commonLib2, Server and Client. For example, the stage 'distStage' in commonLib1
-pipeline can trigger the other two pipelines, and the stage 'pkgstage' in commonLib2 pipeline can trigger Server pipeline. The configuration
-would be:
+Suppose there are four pipelines: `commonLib1`, `commonLib2`, `Server`, and `Client`.
+
+We can configure these such that:
+
+- When the stage `distStage` from pipeline `commonLib1` passes, it will run pipelines `Server` and `Client`
+- When the stage `pkgstage` from pipeline `commonLib2` passes, it will run the `Server` pipeline
+
+The corresponding configuration would be:
 
 ```xml
 <pipeline name="Server">
@@ -2322,6 +2596,18 @@ would be:
 <pipeline name="Client">
   <materials>
     <pipeline pipelineName="commonLib1" stageName="distStage"/>
+  </materials>
+  ...
+</pipeline>
+```
+
+If instead, we want the `Server` pipeline to run when the stage `commonLib2/distStage` passes but not on `commonLib1/pkgStage`, we can set the `ignoreForScheduling` flag to `true` on the `commonLib1/pkgStage` material:
+
+```xml
+<pipeline name="Server">
+  <materials>
+    <pipeline pipelineName="commonLib1" stageName="distStage" ignoreForScheduling="true"/>
+    <pipeline pipelineName="commonLib2" stageName="pkgStage"/>
   </materials>
   ...
 </pipeline>
@@ -2377,7 +2663,7 @@ The `<jobs>` element specify the set of jobs for a stage.
 
 **Note:**
 
-`<jobs>` can contain several [`<job>`](#job) elements. These jobs can run in parallel on different [`<agents>`](#agents).
+`<jobs>` can contain several [`<job>`](#job) elements. These jobs can run in parallel on different agents.
 
 **Examples**
 
@@ -2506,17 +2792,17 @@ There can be zero or more tasks. These tasks are executed in the order specified
 
 The following environment variables are set for all tasks:
 
-| Attribute | Description |
-|-----------|-------------|
-| `GO_SERVER_URL` | The base URL for the server, including '/go'. For example: `https://localhost:8154/go` |
-| `GO_PIPELINE_NAME` | The name of the pipeline to which the job belongs to |
-| `GO_PIPELINE_LABEL` | The label of the pipeline to which the job belongs to |
-| `GO_STAGE_NAME` | The name of the stage to which the job belongs to |
-| `GO_STAGE_COUNTER` | The re-run counter of the stage to which the job belongs to |
-| `GO_JOB_NAME` | The name of the job that is being run |
-| `GO_DEPENDENCY_LABEL_ <upstream_pipeline_name>_<upstream_stage_name>` | The label of the upstream pipeline which triggered the pipeline which the job belongs to. For example: 'GO_DEPENDENCY_LABEL_FRAMEWORK_DEV' is the environment variable where the name of the upstream pipeline is 'framework' and the upstream stage is 'dev'. Hyphen ('-') is an illegal character in an environment variable. So if a pipeline name or stage name contains '-', it will be converted into an underscore. For example, 'pipeline-foo' with stage 'stage-foo' becomes: GO_DEPENDENCY_LABEL_PIPELINE_FOO_STAGE_FOO. |
-| <span id="env-var-GO_TO_REVISION">`GO_TO_REVISION_<material_name>`</span> | The lastest revision in modifications that the build running against for each configured SCM material. |
-| <span id="env-var-GO_FROM_REVISION">`GO_FROM_REVISION_<material_name>`</span> | The earlist revision in modifications that the build running against for each configured SCM material. |
+| Attribute                                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|-------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GO_SERVER_URL`                                                               | The base URL for the server, including '/go'. For example: `http://localhost:8153/go`                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `GO_PIPELINE_NAME`                                                            | The name of the pipeline to which the job belongs to                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `GO_PIPELINE_LABEL`                                                           | The label of the pipeline to which the job belongs to                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `GO_STAGE_NAME`                                                               | The name of the stage to which the job belongs to                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `GO_STAGE_COUNTER`                                                            | The re-run counter of the stage to which the job belongs to                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `GO_JOB_NAME`                                                                 | The name of the job that is being run                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `GO_DEPENDENCY_LABEL_<upstream_pipeline_name>_<upstream_stage_name>`          | The label of the upstream pipeline which triggered the pipeline which the job belongs to. For example: 'GO_DEPENDENCY_LABEL_FRAMEWORK_DEV' is the environment variable where the name of the upstream pipeline is 'framework' and the upstream stage is 'dev'. Hyphen ('-') is an illegal character in an environment variable. So if a pipeline name or stage name contains '-', it will be converted into an underscore. For example, 'pipeline-foo' with stage 'stage-foo' becomes: GO_DEPENDENCY_LABEL_PIPELINE_FOO_STAGE_FOO. |
+| <span id="env-var-GO_TO_REVISION">`GO_TO_REVISION_<material_name>`</span>     | The lastest revision in modifications that the build running against for each configured SCM material.                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| <span id="env-var-GO_FROM_REVISION">`GO_FROM_REVISION_<material_name>`</span> | The earlist revision in modifications that the build running against for each configured SCM material.                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 **Examples**
 
@@ -2532,7 +2818,7 @@ The following environment variables are set for all tasks:
 
 ## &lt;ant&gt; {#ant}
 
-Specifies an Ant build to run. Ant is assumed to be present from the command line on the agent. Go depends on and uses JDK 1.6. If JDK 1.4 or 1.5 binaries are required by a build, it can be specified in the Ant [javac](https://ant.apache.org/manual/Tasks/javac.html) task.
+Specifies an Ant build to run. Ant is assumed to be present from the command line on the agent.
 
 All paths specified are relative to the pipeline working directory.
 
@@ -2916,7 +3202,7 @@ The task 'start\_server' starts a process on an agent. When the stage is cancell
 ## &lt;artifact&gt; {#artifact}
 
 Publish build or test artifacts to the artifact repository for the job. The src attribute should point towards a folder that contains the test output files. Go will use these to generate a test report if the artifact type is `test`. Test
-information is placed in the Failures and Test sub-tabs. Test results from multiple jobs are aggregated on the stage detail pages. This allows you to see the results of tests from both functional and unit tests even if they are run in different jobs.
+information is placed in the Tests sub-tab.
 
 **Attributes**
 
@@ -3042,81 +3328,6 @@ Given some coverage information in 'target/Jcoverage' folder on the agent side, 
 </job>
 ```
 
-## &lt;properties&gt; {#properties}
-
-The `<properties>` element allows you to create properties of the build from XML files or artifacts created during your build. You can export
-the values of properties over time. This allows you to track properties against certain builds, for example to see whether build time is
-improving or getting worse.
-
-**Example:**
-
-```xml
-<job name="emma">
-  <artifacts>
-    <artifact type="build" src="target/emma" dest="analysis" />
-  </artifacts>
-  <tasks>
-    <ant target="emma" />
-  </tasks>
-  <properties>
-    <property name="coverage.class" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'class')]/@value, '%')" />
-    <property name="coverage.method" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'method')]/@value, '%')" />
-    <property name="coverage.block" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'block')]/@value, '%')" />
-    <property name="coverage.line" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'line')]/@value, '%')" />
-  </properties>
-</job>
-```
-
-[top](#top)
-
-## &lt;property&gt; {#property}
-
-Define a Property based on the contents of an XML file.
-
-**Attributes**
-
-| Attribute | Required | Description |
-|-----------|----------|-------------|
-| name | Yes | The name of the property. It has to be unique within a `<job>`. The name can contain: a-z, A-Z, 0-9, fullstop, underscore and hyphen only. Spaces are not allowed. Name is case-sensitive. |
-| src | Yes | The xml file containing the data that you want to use to create the property, and it isn't allowed to start from '.' Properties are set on the Agent at the end of the build and does not need to be an artifact that will be uploaded to the server. |
-| xpath | Yes | The XPath that will be used to create the property. |
-
-**Example:**
-
-This is a simple example to parse the errors and failures count from a single junit file and turn them into properties.
-
-```xml
-<job name="junit">
-  <tasks>
-    <ant target="unittest">
-  </tasks>
-  <properties>
-    <property name="junit.errors" src="target/junit-reports/TEST-MainAppTest.xml" xpath="string(/testsuite/@errors)" />
-    <property name="junit.failures" src="target/junit-reports/TEST-MainAppTest.xml" xpath="string(/testsuite/@failures)" />
-  </properties>
-</job>
-```
-
-Here's a more complex example. This will parse the class, method, block, and line coverage out of an [EMMA](http://emma.sourceforge.net/)
-coverage.xml file.
-
-```xml
-<job name="emma">
-  <artifacts>
-    <artifact type="build" src="target/emma" dest="analysis" />
-  </artifacts>
-  <tasks>
-    <ant target="emma" />
-  </tasks>
-  <properties>
-    <property name="coverage.class" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'class')]/@value, '%')" />
-    <property name="coverage.method" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'method')]/@value, '%')" />
-    <property name="coverage.block" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'block')]/@value, '%')" />
-    <property name="coverage.line" src="target/emma/coverage.xml" xpath="substring-before(//report/data/all/coverage[starts-with(@type,'line')]/@value, '%')" />
-  </properties>
-</job>
-```
-
 [top](#top)
 
 ## &lt;approval&gt; {#approval}
@@ -3236,7 +3447,7 @@ The `<environments>` element specifies the set of environments known by the serv
 
 ## &lt;environment&gt; {#environment}
 
-Allows you to group a set of agents together for exclusive use.
+Allows you to group a set of agents and pipelines together for exclusive use.
 
 **Attributes**
 
@@ -3259,25 +3470,13 @@ Allows you to group a set of agents together for exclusive use.
       <environmentvariables>
       <variable name="FOO"><value>bar</value></variable>
       </environmentvariables>
-      <agents>
-        <physical uuid="94fcb7ad-8b97-4078-b5f6-3c7436d6a390"/>
-      </agents>
       <pipelines>
         <pipeline name="yourproject"/>
       </pipelines>
     </environment>
   </environments>
-  <agents>
-    <agent hostname="agent01" ipaddress="192.168.0.1" uuid="94fcb7ad-8b97-4078-b5f6-3c7436d6a390" />
-  </agents>
 </cruise>
 ```
-
-[top](#top)
-
-## &lt;agents&gt; {#environment-agents}
-
-The `<agents>` element inside the [`<environment>`](#environment) element specifies the set of agents that it references.
 
 [top](#top)
 
@@ -3312,28 +3511,6 @@ allow certain variable names and/or values.
 
 [top](#top)
 
-## &lt;physical&gt; {#environment-agents-physical}
-
-References a physical agent to be associated with this environment.
-
-**Attributes**
-
-| Attribute | Required | Description |
-|-----------|----------|-------------|
-| uuid  | Yes | Identifier to an agent (must exist in the config file). |
-
-**Examples**
-
-```xml
-<environment name="UAT">
-  <agents>
-    <physical uuid="94fcb7ad-8b97-4078-b5f6-3c7436d6a390"/>
-  </agents>
-</environment>
-```
-
-[top](#top)
-
 ## &lt;pipelines&gt; {#environment-pipelines}
 
 The `<pipelines>` element inside the [`<environment>`](#environment) element specifies the set of pipelines that it references.
@@ -3361,61 +3538,3 @@ References a pipeline to be associated with this environment.
 ```
 
 [top](#top)
-
-## &lt;agents&gt; {#agents}
-
-The `<agents>` element specifies the set of agents known by the server.
-
-**Notes:**
-
-Do not change it manually. You can manage these through the Agents tab.
-
-[top](#top)
-
-## &lt;agent&gt; {#agent}
-
-An approved agent. Before it is approved, the agent is displayed on the top of the agent tab with a grey bar.
-
-**Attributes**
-
-| Attribute | Required | Description |
-|-----------|----------|-------------|
-| hostname | Yes | Name of your agent. This defaults to the hostname of the agent when it is approved. |
-| ipaddress | Yes | IP for the agent. |
-| uuid | Yes | Identifier for the agent. It is created by Go automatically. |
-| isDisabled | No | The values should be one of 'true' or 'false' (or 1 / 0). 'true' or '1' means that the agent is denied. Go doesn't assign jobs to a denied agent. |
-| elasticAgentId | No | Id of your elastic agent. **This attribute is only required for elastic agents.** |
-| elasticPluginId | No | Elastic-agent plugin Id. **This attribute is only required for elastic agents.** |
-
-**Notes:**
-
-A local agent will be approved automatically.
-
-[top](#top)
-
-## &lt;resources&gt; {#agentresources}
-
-`<resources>` describes the resources available on a particular agent.
-
-**Note:**
-
-An agent without any resources will build any jobs that don't specify resources. Refer to the [`<resources>`](#resources) of [`<job>`](#job).
-
-[top](#top)
-
-## &lt;resource&gt; {#agentresource}
-
-Resources names can contain the following characters: a-z, A-Z, 0-9, fullstop, underscore and hyphen. Spaces are not allowed.
-
-**Examples**
-
-```xml
-<agents>
-  <agent hostname="agent01" ipaddress="192.168.0.1" uuid="94fcb7ad-8b97-4078-b5f6-3c7436d6a390">
-    <resources>
-      <resource>java</resource>
-      <resource>linux</resource>
-    </resources>
-  </agent>
-</agents>
-```

@@ -12,6 +12,7 @@ aliases:
 This page is mainly for newer users of GoCD, to help with troubleshooting issues.
 
 <a id="agent_registration"></a>
+
 ### GoCD Agent not registering with the GoCD Server
 
 This issue shows up either as an agent not showing up on the "Agents" page, or
@@ -32,17 +33,17 @@ at the end of these files might be interesting. Some common errors are:
         INFO  apache.commons.httpclient.HttpMethodDirector:438 - I/O exception (java.net.ConnectException) caught when processing request: Connection refused
         INFO  apache.commons.httpclient.HttpMethodDirector:444 - Retrying request
 
-    The problem here is that the agent cannot reach the server, either because of
-    a problem with the network or because the ports used by the server are not
-    accessible due to firewall restrictions. The GoCD server uses two ports, 8153
-    and 8154 (by default). These two ports need to be accessible by the agents.
+    The problem here is that the agent cannot reach the server, either because of a problem with the network or because 
+    the ports used by the server are not accessible due to firewall restrictions. The GoCD server uses port 8153 by 
+    default over HTTP, but if you have configured a [reverse proxy](../installation/configure-reverse-proxy.html) to 
+    terminate TLS, you should ensure the agent is configured with the correct protocol/host/port for the server.
 
 2. **Unable to connect - SSL handshake error or connection reset**
 
     This manifests itself as logs in go-agent-bootstrapper.out.log with lines similar to this:
 
-        180679 [main] ERROR com.thoughtworks.go.agent.launcher.ServerCall  - Couldn't access Go Server with base url: https://YOUR_SERVER:8154/go/admin/agent-launcher.jar: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
-        java.lang.Exception: Couldn't access Go Server with base url: https://YOUR_SERVER:8154/go/admin/agent-launcher.jar: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
+        180679 [main] ERROR com.thoughtworks.go.agent.launcher.ServerCall  - Couldn't access Go Server with base url: https://YOUR_SERVER/go/admin/agent-launcher.jar: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
+        java.lang.Exception: Couldn't access Go Server with base url: https://YOUR_SERVER/go/admin/agent-launcher.jar: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
         at com.thoughtworks.go.agent.launcher.ServerCall.invoke(ServerCall.java:78)
         at com.thoughtworks.go.agent.launcher.ServerBinaryDownloader.headers(ServerBinaryDownloader.java:130)
         at com.thoughtworks.go.agent.launcher.ServerBinaryDownloader.downloadIfNecessary(ServerBinaryDownloader.java:106)
@@ -80,25 +81,18 @@ at the end of these files might be interesting. Some common errors are:
 
     or this:
 
-        2986 [main] ERROR com.thoughtworks.go.agent.launcher.ServerCall  - Couldn't access Go Server with base url: https://YOUR_SERVER:8154/go/admin/agent-launcher.jar: java.net.SocketException: Connection reset
-        java.lang.Exception: Couldn't access Go Server with base url: https://YOUR_SERVER:8154/go/admin/agent-launcher.jar: java.net.SocketException: Connection reset
+        2986 [main] ERROR com.thoughtworks.go.agent.launcher.ServerCall  - Couldn't access Go Server with base url: https://YOUR_SERVER/go/admin/agent-launcher.jar: java.net.SocketException: Connection reset
+        java.lang.Exception: Couldn't access Go Server with base url: https://YOUR_SERVER/go/admin/agent-launcher.jar: java.net.SocketException: Connection reset
         at com.thoughtworks.go.agent.launcher.ServerCall.invoke(ServerCall.java:78)
         ...
 
-    The problem here is that the agent is not able to connect securely to the
-    server, which points to an invalid certificate. This can happen if an agent
-    has connected to one GoCD server and is then pointed to another GoCD
-    server. It will try to connect to the new server using the certificate that
-    was for the older server and it will fail.
+    The problem here is that the agent is not able to connect securely to the server, which points to an invalid 
+    certificate or a certificate that the agent does not trust.
 
-    The resolution is to move or rename the agent.jks file found the in the
-    config/ directory of the agent and restarting the agent. That should make it
-    connect using the correct certificate.
-
-    If you're using full
-    [end-to-end transport security](../installation/ssl_tls/end_to_end_transport_security.html),
-    this error might mean that the server's certificate has changed and you need
-    to provide the update certificate.
+    If you're using full [end-to-end transport security](../installation/ssl_tls/end_to_end_transport_security.html) 
+    with a [reverse proxy](../installation/configure-reverse-proxy.html) or load balancer terminating TLS, this error 
+    might mean that the server's certificate has changed or that the agent's configuration needs to be updated to
+    trust the server's current certificate.
 
 3. **Incompatible Java version**
 
@@ -118,8 +112,29 @@ at the end of these files might be interesting. Some common errors are:
           at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
 
     The problem here is that the version of Java used by the agent is too old. In
-    this example, Java 6 was used by an agent, with a 16.2.0 GoCD server, which
+    this example, Java 6 was used by an agent, with a `16.2.0` GoCD server, which
     needs Java 7.
+
+4. **Agent tokens have been invalidated or you are trying to switch to another server**
+
+    You already have successfully enabled the agent on the server, but now the agent doesn't show up anymore on the server.
+
+    go-agent.log reads like this:
+
+        java.lang.RuntimeException: org.apache.http.client.ClientProtocolException: The server returned status code 403. Possible reasons include:
+        - This agent has been deleted from the configuration
+        - This agent is pending approval
+
+    Scenario 1: You have re-installed the server from scratch or cleaned up a few files on the server.
+    Thereby you have invalidated the tokens of all agents and no agent can connect to the server anymore.
+
+    Scenario 2: You are trying to connect the agent to a different server. Of course, the agent's token isn't valid for the new server.
+
+    Unfortunately, the agent cannot simply drop the invalidated token, because it might be one of the other reasons above - and then
+    dropping the token wouldn't be a good idea.
+
+    Instead, you have to deleted the invalidated token manually. Find the agent's config directory (/var/lib/go-agent/config by default under Linux) and delete the files `guid.txt` and `token`.
+
 
 <a id="path_issues"></a>
 ### Command not found (git, svn, mvn, ant or others)
@@ -234,12 +249,35 @@ The AJAX API request has a timeout set to 5000 milliseconds, if the server does 
 
 Resolution: If this is happening, consider increase the timeout period by specifying the [go.spa.timeout](../advanced_usage/other_config_options.html#go-spa-timeout)
 
+<a name="https-port-not-started"></a>
+### Application not listening to port 8154 (HTTPS)
+
+From GoCD `20.2.0` onwards, the GoCD server will no longer generate any self-signed SSL/TLS certificates or listen to port 8154 (HTTPS) *by default*.
+From GoCD `20.5.0` the server no longer contains any functionality to configure TLS on the server.
+
+Users are expected to terminate TLS elsewhere, for example using a [reverse proxy](../installation/configure-reverse-proxy.html)
+or load balancer.
+
+Versions between `20.2.0` and `20.5.0` allowed fallback to use previous configuration as a temporary measure. More information
+can be found [in issue #7872](https://github.com/gocd/gocd/issues/7872).
+
 <a name="ports-in-use"></a>
-### Port 8153 (HTTP) or 8154 (HTTPS) could not be opened
+### Port 8153 (HTTP) could not be opened
 
 This issue shows up an error when starting GoCD Server:
 
     Port 8153 could not be opened. Please Check if it is available
-    Port 8154 could not be opened. Please Check if it is available
 
-This could be happening if port 8153 or 8154 are already used. In order to change default ports, set the system properties `cruise.server.port` and `cruise.server.ssl.port` to appropriate values. These system properties can be set in the file `wrapper-properties.conf` on the GoCD server to add the system properties described above. See the installation documentation for the location of `wrapper-properties.conf` file.
+This could be happening if port 8153 is already used. In order to change default ports, set the system property `cruise.server.port` to an appropriate value in the file `wrapper-properties.conf` on the GoCD server. See the installation documentation for the location of `wrapper-properties.conf` file.
+
+<a name="expand-shell-profile"></a>
+### Expand the shell profile
+
+GoCD agents use a restricted shell profile. The go user profile is not sourced when the agent starts or a shell command is run. This can result in the GoCD agent being unable to run applications installed in non default locations.
+
+To expand the PATH variable, the wrapper-properties.conf file should be updated to include the required PATH locations. The example below shows how to expand the PATH to support rbenv.
+
+```shell
+# On Unix/Linux/macOS. Note that you must use %PATH%, and not $PATH, as you'd normally do on this platform
+set.PATH=var/go/.rbenv/plugins/ruby-build/bin:/var/go/.rbenv/shims:%PATH%
+```

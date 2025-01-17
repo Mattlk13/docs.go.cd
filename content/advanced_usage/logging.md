@@ -26,7 +26,6 @@ The table below describes the various loggers that can be configured with the se
 | Logger                                                 | Additivity | Description                                                                                                                                                                                         |
 |--------------------------------------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `com.thoughtworks.go.server.Rails`                     | `true`     | This will enable debugging the rails application server.                                                                                                                                            |
-| `com.thoughtworks.studios.shine`                       | `true`     | This will enable debugging of GoCD's test report analysis that is shown on the "Tests" tab of the stage details page on the server.                                                                 |
 | `org.springframework`                                  | `true`     | This will enable debugging of the spring framework.                                                                                                                                                 |
 | `org.apache.velocity`                                  | `true`     | This will enable debugging of some of the server view templates.                                                                                                                                    |
 | `org.eclipse.jetty.server.RequestLog`                  | `false`    | This will enable http request logging to help diagnose and identify slow page render times.                                                                                                         |
@@ -118,14 +117,14 @@ To turn on web request logs, add below content to logback-include.xml.
 
   <appender name="web-request-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>logs/web-requests.log</file>
-    <!-- Use `C:\Program Files\Go Server\logs\` on windows and `~/Library/Application Support/Go Server/logs/` on Mac OS for log directory path. -->
+    <!-- Use `C:\Program Files\Go Server\logs\` on windows and `~/Library/Application Support/Go Server/logs/` on MacOS for log directory path. -->
     <encoder>
       <pattern>%date{ISO8601} %-5level [%thread] %logger{0}:%line - %msg%n</pattern>
     </encoder>
 
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <fileNamePattern>logs/web-requests.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-      <!-- Use `C:\Program Files\Go Server\logs\` on windows and `~/Library/Application Support/Go Server/logs/` on Mac OS for log directory path. -->
+      <!-- Use `C:\Program Files\Go Server\logs\` on windows and `~/Library/Application Support/Go Server/logs/` on MacOS for log directory path. -->
       <maxFileSize>10 MB</maxFileSize>
       <maxHistory>10</maxHistory>
       <totalSizeCap>512 MB</totalSizeCap>
@@ -152,10 +151,10 @@ If you'd like to send log events to a log aggregator service (like logstash, gra
 For e.g. to send logs to logstash (using [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)) one would need to perform the following:
 
 - download all logstash-logback-encoder jars and dependencies into `libs` dir:
-  - `logstash-logback-encoder-4.11.jar`
-  - `jackson-databind-2.9.1.jar`
-  - `jackson-annotations-2.9.1.jar`
-  - `jackson-core-2.9.1.jar`
+  - `logstash-logback-encoder-*.jar`
+  - `jackson-databind-*.jar`
+  - `jackson-annotations-*.jar`
+  - `jackson-core-*.jar`
 
 Then follow the instructions on the [README](https://github.com/logstash/logstash-logback-encoder#readme) to configure your `logback-include.xml` to setup relevant appenders and encoders:
 
@@ -216,7 +215,7 @@ Another example setup using GELF (Graylog Extended Log Format) using [logback-ge
 Download `logback-gelf-1.1.0.jar` and place it in `libs` directory.
 On typical linux server, that can be done with
 ```bash
-wget "http://repo1.maven.org/maven2/de/siegmar/logback-gelf/1.1.0/logback-gelf-1.1.0.jar" -O /var/lib/go-server/libs/logback-gelf-1.1.0.jar
+wget "https://repo1.maven.org/maven2/de/siegmar/logback-gelf/1.1.0/logback-gelf-1.1.0.jar" -O /var/lib/go-server/libs/logback-gelf-1.1.0.jar
 ```
 
 Configure `logback-include.xml` with any of the gelf appenders as defined on [project documentation](https://github.com/osiegmar/logback-gelf#example):

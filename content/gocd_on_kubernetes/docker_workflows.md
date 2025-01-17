@@ -17,7 +17,7 @@ Docker in Docker involves setting up a docker binary and running an isolated doc
 
 **Drawbacks:**
 
-As explained by [jpetazzo in his blogpost](http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/), there are some cases where DinD may not work for you. Additionally, there is a security risk of running a container in privileged mode as well.
+As explained by [jpetazzo in his blogpost](https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/), there are some cases where DinD may not work for you. Additionally, there is a security risk of running a container in privileged mode as well.
 
 ## Docker Outside of Docker (DooD)
 
@@ -27,7 +27,7 @@ This requires the docker binary to be installed in the gocd agent image because 
 
 This can be achieved by doing:
 ```bash
-docker run -it -v /var/run/docker.sock:/var/run/docker.sock -e GO_SERVER_URL="https://<go-server-ip>:8154/go" <gocd-agent-image-with-docker>
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock -e GO_SERVER_URL="https://<go-server-ip>/go" <gocd-agent-image-with-docker>
 ```
 
 **Drawbacks:**

@@ -30,7 +30,9 @@ In this example, the password file authentication method will be tried first. If
 
 2. Click on "Add" and provide any identifier (ID) for the configuration and then choose "Password File Authentication Plugin for GoCD".
 
-3. Provide the path to a password file on the GoCD server.
+3. Provide the path to a password file on the GoCD server. Either absolute paths or paths relative to GoCD's installation directory are accepted.
+
+4. Specify allow only known users to login field. [Learn more](dev_authentication.html#controlling-user-access)
 
 The [password file plugin's documentation](https://github.com/gocd/gocd-filebased-authentication-plugin#readme) has information about the values that can go into a password file.
 
@@ -43,6 +45,8 @@ The [password file plugin's documentation](https://github.com/gocd/gocd-filebase
 2. Click on "Add" and provide any identifier (ID) for the configuration and then choose "LDAP Authentication Plugin for GoCD".
 
 3. Provide the appropriate values for your LDAP server. You might need to talk to the LDAP/AD server administrator at your organization to get the right values.
+
+4. Specify allow only known users to login field. [Learn more](dev_authentication.html#controlling-user-access)
 
 The [LDAP authentication plugin's documentation](https://github.com/gocd/gocd-ldap-authentication-plugin#readme) has more information about the configuration.
 
@@ -74,8 +78,7 @@ GoCD checks if an authenticated user is an existing user or a new user (logging 
 To switch the mode in which the GoCD Server operates:
 
 1. Login to GoCD as an admin
-2. Navigate to the "Admin" section
-3. Click on the "Server Configuration" tab
-4. Set the "Allow users to login via plugin into GoCD, even if they haven't been explicitly added to GoCD." checkbox
+2. Navigate to the "Authorization Configuration" section
+4. Set the "Allow only known users to login" for desired authorization configuration.
 
 ![](../images/user_authentication_auto_login.png)

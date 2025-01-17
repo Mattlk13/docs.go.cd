@@ -20,7 +20,7 @@ Note that the hostname is as reported by the agent, and the IP address is as rep
 
 To add the agent to the cloud, click "Enable". Note that even after you have clicked "Enable", the agent will not be enabled until it next contacts the server -- so if your agent has stopped talking to the server, nothing will happen.
 
-Once your agent has successfully been enabled, it should no longer appear greyed out and will and be marked "idle". At this point your agent will automatically begin picking up jobs. Agents will automatically check out any code they need in order to start running jobs.
+Once your agent has successfully been enabled, it will be marked "Idle". At this point your agent will automatically begin picking up jobs. Agents will automatically check out any code they need in order to start running jobs.
 
 ## Matching jobs to agents
 
@@ -66,7 +66,7 @@ If an agent is working on a job, it will turn orange, and display the name of th
 
 If you want to remove an agent from GoCD's build cloud, go to the agents tab, locate the agent you want to remove, and click on the button marked "Disable". GoCD will record in its configuration that this agent should be excluded from the build cloud. If you restart Go server, the agent will continue to be disabled. Disabled agents do not count towards GoCD's licensed agents.
 
-To permanently remove an agent from Go's configuration, you can use the [agent api](https://api.gocd.org/#agents) or delete from the agents tab. The agent must be disabled before it can be deleted
+To permanently remove an agent from Go's configuration, you can use the [agent api](https://api.gocd.org/current/#agents) or delete from the agents tab. The agent must be disabled before it can be deleted
 
 Following this procedure, if you restart the agent, GoCD server will see it as a new agent, and you can enable it again in the same way as described above.
 
